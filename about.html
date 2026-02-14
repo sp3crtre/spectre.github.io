@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>spectre :: whoami</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *, 
+        *::before, 
+        *::after { 
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Inter', -apple-system, monospace; 
+        
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            background-color: transparent;
+        }
+
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+
+        .nav-link {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+        }
+        .nav-link:hover {
+            color: #ff3b3b;
+        }
+        .nav-link.active {
+            color: #ff3b3b;
+            font-weight: 600;
+        }
+
+        .about-card {
+            background-color: #141414;
+            padding: 2rem;
+        }
+
+        .category-tag {
+            color: #888;
+            font-size: 0.8rem;
+            font-family: monospace;
+            background-color: #1e1e1e;
+            padding: 0.25rem 0.75rem;
+            display: inline-block;
+        }
+
+        .section-header {
+            color: #ffffff;
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.5rem 0;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .section-header span {
+            color: #ff3b3b;
+            font-family: monospace;
+            font-size: 1rem;
+            background-color: #1a1a1a;
+            padding: 0.25rem 0.75rem;
+        }
+
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background-color: #ff3b3b;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        .prompt-line {
+            color: #666;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .prompt-line .red {
+            color: #ff3b3b;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-item {
+            padding: 1rem;
+            background-color: #141414;
+            transition: background-color 0.2s ease;
+        }
+        .contact-item:hover {
+            background-color: #1a1a1a;
+        }
+        .contact-item:hover .contact-label {
+            color: #ff3b3b;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-canvas"></canvas>
+
+    <div class="sticky-nav">
+        <div class="content-wrapper">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-[#ff3b3b] font-mono text-xl">$></span>
+                    <span class="text-white text-xl font-light">cyb3r_l4b</span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="nav-link">writeups</a>
+                    <a href="ctf.html" class="nav-link">ctf</a>
+                    <a href="research.html" class="nav-link">research</a>
+                    <a href="about.html" class="nav-link active">about</a>
+                </div>
+                
+                <div class="text-[#ff3b3b] font-mono text-sm hidden md:block">
+                    [about@spectre]
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="content-wrapper">
+
+        <div class="prompt-line">
+            <span class="red">❯</span> ~/about <span class="red">·</span> whoami
+            <span class="cursor-blink ml-2"></span>
+        </div>
+
+        <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-4">
+            about<span class="text-[#ff3b3b]">.</span>
+        </h1>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+            <div class="md:col-span-2">
+                <div class="about-card">
+                    <p class="text-lg text-[#e0e0e0] leading-relaxed mb-6">
+                        <span class="font-bold">I'm Spectre aka kurt zamora, a</span><br/>
+                        Security researcher and penetration tester with over 5 years of experience in offensive security. 
+                        Specializing in web application security, Active Directory exploitation, and exploit development.
+                    </p>
+                    <p class="text-[#a0a0a0] leading-relaxed mb-6">
+                        I've discovered and responsibly disclosed 9 CVEs, earned $12.5k in bug bounties, and competed in 
+                        numerous CTF competitions with team 0xdefecated (8th place at DEFCON quals 2025). 
+                    </p>
+                    <p class="text-[#a0a0a0] leading-relaxed">
+                        This site is a collection of my writeups, research, and CTF solutions. All content is free 
+                        and open for the security community.
+                    </p>
+                </div>
+            </div>
+
+            <div>
+                <div class="about-card h-full">
+                    <div class="text-[#ff3b3b] font-mono text-sm mb-4">// credentials</div>
+                    <div class="space-y-3">
+                        <div>
+                            <div class="text-[#888] text-sm">Redacted</div>
+                            <div class="text-white">Done</div>
+                        </div>
+                        <div>
+                            <div class="text-[#888] text-sm">Redacted</div>
+                            <div class="text-white">Done</div>
+                        </div>
+                        <div>
+                            <div class="text-[#888] text-sm">Redacted</div>
+                            <div class="text-white">in progress</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            skills
+            <span>tooling</span>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
+            <div class="about-card">
+                <div class="text-[#ff3b3b] mb-3">web</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="category-tag">burpsuite</span>
+                    <span class="category-tag">nuclei</span>
+                    <span class="category-tag">sqlmap</span>
+                    <span class="category-tag">ffuf</span>
+                </div>
+            </div>
+            <div class="about-card">
+                <div class="text-[#ff3b3b] mb-3">exploitation</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="category-tag">metasploit</span>
+                    <span class="category-tag">pwntools</span>
+                    <span class="category-tag">gdb</span>
+                </div>
+            </div>
+            <div class="about-card">
+                <div class="text-[#ff3b3b] mb-3">reversing</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="category-tag">ghidra</span>
+                    <span class="category-tag">ida</span>
+                    <span class="category-tag">x64dbg</span>
+                </div>
+            </div>
+            <div class="about-card">
+                <div class="text-[#ff3b3b] mb-3">languages</div>
+                <div class="flex flex-wrap gap-2">
+                    <span class="category-tag">python</span>
+                    <span class="category-tag">c</span>
+                    <span class="category-tag">asm</span>
+                    <span class="category-tag">rust</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-header">
+            contact
+            <span>reach me</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-12">
+            <div class="contact-item flex items-center justify-between">
+                <div>
+                    <div class="contact-label text-white font-medium">signal</div>
+                    <div class="text-[#888] text-sm">encrypted messaging</div>
+                </div>
+                <div class="text-[#ff3b3b]">@spectre.01</div>
+            </div>
+            <div class="contact-item flex items-center justify-between">
+                <div>
+                    <div class="contact-label text-white font-medium">email</div>
+                    <div class="text-[#888] text-sm">pgp encrypted preferred</div>
+                </div>
+                <div class="text-[#ff3b3b]">spectre@protonmail.com</div>
+            </div>
+            <div class="contact-item flex items-center justify-between">
+                <div>
+                    <div class="contact-label text-white font-medium">twitter/x</div>
+                    <div class="text-[#888] text-sm">security posts</div>
+                </div>
+                <div class="text-[#ff3b3b]">@Spectre</div>
+            </div>
+            <div class="contact-item flex items-center justify-between">
+                <div>
+                    <div class="contact-label text-white font-medium">github</div>
+                    <div class="text-[#888] text-sm">exploit code</div>
+                </div>
+                <div class="text-[#ff3b3b]">/spectre-sec</div>
+            </div>
+        </div>
+
+        <div class="about-card">
+            <div class="text-[#ff3b3b] font-mono text-sm mb-4">// gpg public key</div>
+            <div class="bg-black p-4 font-mono text-sm text-[#888]">
+                <div>-----BEGIN PGP PUBLIC KEY BLOCK-----</div>
+                <div>3B6A 8D4F 1C22 9E01  B0C1  D45A 9F22 E07C 4F11</div>
+                <div>0x5F2D9C4E · xor@cyberlab.local</div>
+                <div>-----END PGP PUBLIC KEY BLOCK-----</div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="flex items-center gap-4">
+                <span class="text-[#ff3b3b]">$></span>
+                <span>~/about</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>pgp fingerprint available</span>
+                <span>·</span>
+                <span>updated 2026-04-10</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix background
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+
+        function resize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+
+        const phrases = [
+            "breach", "ransomware", "exploit", "0day", "backdoor", "malware",
+            "phishing", "rootkit", "botnet", "trojan", "worm", "keylogger",
+            "anonymous", "wikileaks", "cyberattack", "databreach", "leak",
+            "doxxing", "opsec", "infosec", "hacktivist", "cyberwar",
+            "payload", "shellcode", "reverse shell", "bind shell", "dropper",
+            "persistence", "privilege escalation", "lateral movement",
+            "apt28", "fancy bear", "lazarus", "dark side", "revil", "lockbit",
+            "conti", "blackcat", "cl0p", "hive", "ransomhouse",
+            "metasploit", "cobalt strike", "bloodhound", "mimikatz",
+            "wireshark", "nmap", "burpsuite", "sqlmap", "hydra", "john",
+            "we are legion", "expect us", "freedom of information",
+            "opchina", "opisis", "anonymous never dies",
+            "data leak", "credentials", "pwned", "compromised", "exfiltrated",
+            "dark web", "pastebin", "dump", "breach forum", "raidforums",
+            "encrypted", "decryptor", "bitcoin", "monero", "ransom note",
+            "double extortion", "leak site", "deadline", "negotiation",
+            "cyber warfare", "info ops", "psyops", "influence campaign",
+            "disinformation", "hack and leak", "cyber sabotage",
+            "about", "contact", "whoami", "spectre", "researcher", "security",
+            "writeup", "ctf", "pwn", "rev", "crypto", "web", "forensics"
+        ];
+
+        let particles = [];
+
+        function initParticles(count = 150) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w, y: Math.random() * h,
+                    speedX: (Math.random() - 0.5) * 0.8,
+                    speedY: Math.random() * 0.8 + 0.3,
+                    size: 14 + Math.floor(Math.random() * 20),
+                    opacity: 0.3 + Math.random() * 0.4,
+                    text: phrases[Math.floor(Math.random() * phrases.length)]
+                });
+            }
+        }
+        initParticles(150);
+
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            for (let p of particles) {
+                p.x += p.speedX; p.y += p.speedY;
+                if (p.x > w + 150) p.x = -100; if (p.x < -150) p.x = w + 100;
+                if (p.y > h + 150) p.y = -100; if (p.y < -100) p.y = h + 100;
+                ctx.font = `${p.size}px "Courier New", monospace`;
+                ctx.fillStyle = `rgba(180, 180, 180, ${p.opacity})`;
+                ctx.fillText(p.text, p.x, p.y);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+
+        window.addEventListener('resize', () => setTimeout(() => initParticles(150), 200));
+    </script>
+</body>
+</html>
