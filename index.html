@@ -13,7 +13,6 @@
             padding: 0;
             margin: 0;
             font-family: 'Inter', -apple-system, monospace; 
-        
         }
         
         body {
@@ -73,6 +72,42 @@
             padding: 2rem;
         }
 
+        .typewriter-container {
+            min-height: 200px;
+            margin-bottom: 1rem;
+        }
+
+        .typewriter-line {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 0.5rem;
+            color: #e0e0e0;
+        }
+
+        .typewriter-line .red-text {
+            color: #ff3b3b;
+            font-weight: 600;
+        }
+
+        .typewriter-line .green-text {
+            color: #4caf50;
+        }
+
+        .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2rem;
+            background-color: #ff3b3b;
+            margin-left: 4px;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
         .category-tag {
             color: #888;
             font-size: 0.8rem;
@@ -106,10 +141,6 @@
             background-color: #ff3b3b;
             animation: blink 1s step-end infinite;
             vertical-align: middle;
-        }
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0; }
         }
 
         .prompt-line {
@@ -185,19 +216,29 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
             <div class="md:col-span-2">
                 <div class="about-card">
-                    <p class="text-lg text-[#e0e0e0] leading-relaxed mb-6">
-                        <span class="font-bold">I'm Spectre AKA kurt zamora, a</span><br/>
-                        Security researcher and ethical hacker with over 5 years of experience in offensive security. 
-                        Specializing in web application security, Active Directory exploitation, and exploit development.
-                    </p>
-                    <p class="text-[#a0a0a0] leading-relaxed mb-6">
-                        I've discovered 4 valid vulnerability in bug bounty adn earned $12.5k in bug bounties, and competed in 
-                        numerous CTF competitions with team Redacted. 
-                    </p>
-                    <p class="text-[#a0a0a0] leading-relaxed">
-                        This site is a collection of my writeups, research, and CTF solutions. All content is free 
-                        and open for the security community.
-                    </p>
+                    <div class="typewriter-container" id="typewriterContainer">
+                        <div class="typewriter-line" id="line1"></div>
+                        <div class="typewriter-line" id="line2"></div>
+                        <div class="typewriter-line" id="line3"></div>
+                        <div class="typewriter-line" id="line4"></div>
+                        <div class="typewriter-line" id="line5"></div>
+                        <div class="typewriter-line" id="line6"></div>
+                        <span class="typewriter-cursor" id="cursor"></span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-3 mt-6 pt-4 border-t border-[#333]" id="statsRow" style="opacity: 0; transition: opacity 1s ease;">
+                        <div class="text-center">
+                            <div class="text-[#ff3b3b] text-xl">4</div>
+                            <div class="text-[#888] text-xs">valid bugs</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[#ff3b3b] text-xl">$12.5k</div>
+                            <div class="text-[#888] text-xs">bounties</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[#ff3b3b] text-xl">5+</div>
+                            <div class="text-[#888] text-xs">years exp</div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -206,15 +247,15 @@
                     <div class="text-[#ff3b3b] font-mono text-sm mb-4">// credentials</div>
                     <div class="space-y-3">
                         <div>
-                            <div class="text-[#888] text-sm">Redacted</div>
-                            <div class="text-white">Done</div>
+                            <div class="text-[#888] text-sm">OSCP</div>
+                            <div class="text-white">Offensive Security</div>
                         </div>
                         <div>
-                            <div class="text-[#888] text-sm">Redacted</div>
-                            <div class="text-white">Done</div>
+                            <div class="text-[#888] text-sm">CRTP</div>
+                            <div class="text-white">Certified Red Team</div>
                         </div>
                         <div>
-                            <div class="text-[#888] text-sm">Redacted</div>
+                            <div class="text-[#888] text-sm">eWPTX</div>
                             <div class="text-white">in progress</div>
                         </div>
                     </div>
@@ -324,7 +365,6 @@
     </div>
 
     <script>
-        // Matrix background
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         let w, h;
@@ -516,6 +556,80 @@
         animate();
 
         window.addEventListener('resize', () => setTimeout(() => initParticles(150), 200));
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const lines = [
+                { element: 'line1', text: '<span class="red-text">$></span> <span class="green-text">whoami</span>' },
+                { element: 'line2', text: 'Spectre <span class="red-text">AKA</span> kurt zamora' },
+                { element: 'line3', text: '' },
+                { element: 'line4', text: 'Security researcher and ethical hacker with over 5 years of experience in offensive security.' },
+                { element: 'line5', text: 'Specializing in web application security, Active Directory exploitation, and exploit development.' },
+                { element: 'line6', text: '' },
+                { element: 'line7', text: 'I\'ve discovered <span class="red-text">4 valid vulnerabilities</span> in bug bounty and earned <span class="red-text">$12.5k</span> in bounties,' },
+                { element: 'line8', text: 'and competed in numerous CTF competitions with team <span class="red-text">Redacted</span>.' },
+                { element: 'line9', text: '' },
+                { element: 'line10', text: 'This site is a collection of my writeups, research, and CTF solutions.' },
+                { element: 'line11', text: 'All content is free and open for the security community.' }
+            ];
+
+            let lineIndex = 0;
+            let charIndex = 0;
+            let currentLine = '';
+            const cursor = document.getElementById('cursor');
+            const statsRow = document.getElementById('statsRow');
+
+            lines.forEach(line => {
+                const element = document.getElementById(line.element);
+                if (element) element.innerHTML = '';
+            });
+
+            function typeNextChar() {
+                if (lineIndex >= lines.length) {
+                    setTimeout(() => {
+                        statsRow.style.opacity = '1';
+                        cursor.style.opacity = '1';
+                    }, 500);
+                    return;
+                }
+
+                const currentLineData = lines[lineIndex];
+                const element = document.getElementById(currentLineData.element);
+                
+                if (!element) {
+                    lineIndex++;
+                    typeNextChar();
+                    return;
+                }
+
+                const fullText = currentLineData.text;
+                
+                if (charIndex < fullText.length) {
+                    if (fullText[charIndex] === '<') {
+                        const endTagIndex = fullText.indexOf('>', charIndex);
+                        if (endTagIndex !== -1) {
+                            currentLine += fullText.substring(charIndex, endTagIndex + 1);
+                            charIndex = endTagIndex + 1;
+                        } else {
+                            currentLine += fullText[charIndex];
+                            charIndex++;
+                        }
+                    } else {
+                        currentLine += fullText[charIndex];
+                        charIndex++;
+                    }
+                    
+                    element.innerHTML = currentLine;
+                    setTimeout(typeNextChar, 50); 
+                } else {
+                    lineIndex++;
+                    charIndex = 0;
+                    currentLine = '';
+                    setTimeout(typeNextChar, 300); 
+                }
+            }
+
+            setTimeout(typeNextChar, 1000);
+        });
     </script>
 </body>
 </html>
