@@ -417,9 +417,6 @@ SCRIPT</pre>
                 <tr><td>User</td><td>6efdbe4015141d79c68246790bff191a</td></tr>
                 <tr><td>Root</td><td>bbf0171297a30409df3c44b51dca5373</td></tr>
             </table>
-            <h2>Summary</h2>
-            <p>This challenge was solved through a four-stage attack chain demonstrating how multiple smaller vulnerabilities can be chained for full system compromise. Reconnaissance identified a Next.js 15.0.3 web application on port 3000. CVE-2025-55182 (React2Shell) was used to achieve unauthenticated remote code execution as the <code>node</code> user by exploiting an SSRF vulnerability in Next.js. Credential harvesting from a SQLite database revealed MD5-hashed passwords, and the engineer's password <code>reactor1</code> was cracked using Hashcat and the RockYou wordlist, granting SSH access. Privilege escalation was achieved by exploiting an unauthenticated Node.js inspector running as root on port 9229, using the Chrome DevTools Protocol WebSocket interface to execute arbitrary JavaScript with root privileges.</p>
-            <p>The key takeaways are to never run debug interfaces in production, always use strong password hashing algorithms, and apply security patches promptly for known vulnerabilities.</p>
         </div>
         <div class="footer">
             <div class="flex items-center gap-4">
