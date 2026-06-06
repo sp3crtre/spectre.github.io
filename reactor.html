@@ -412,11 +412,6 @@ SCRIPT</pre>
             <p>To obtain an interactive root shell, a SUID-root copy of bash was created. The SUID bit on <code>/tmp/rb</code> means that when the bash binary is executed, it runs with the privileges of the file owner (root) rather than the user running it. The <code>-p</code> flag tells bash to not drop the effective UID, which it normally does for security reasons when the real and effective UIDs differ:</p>
             <pre>/tmp/rb -p</pre>
             <p>This gave a fully interactive root shell on the target system.</p>
-            <h2>Flags</h2>
-            <table class="flag-table">
-                <tr><td>User</td><td>6efdbe4015141d79c68246790bff191a</td></tr>
-                <tr><td>Root</td><td>bbf0171297a30409df3c44b51dca5373</td></tr>
-            </table>
         </div>
         <div class="footer">
             <div class="flex items-center gap-4">
